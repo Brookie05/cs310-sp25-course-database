@@ -28,6 +28,19 @@ public class RegistrationDAO {
             if (conn.isValid(0)) {
                 
                 // INSERT YOUR CODE HERE
+                // Prepare SQL statement to insert registration
+            String sql = "INSERT INTO registration (studentid, termid, crn) VALUES (?, ?, ?)";
+            ps = conn.prepareStatement(sql);
+            
+            // Set parameters
+            ps.setInt(1, studentid);
+            ps.setInt(2, termid);
+            ps.setInt(3, crn);
+            
+            // Execute update and check if a row was inserted
+            int rowsAffected = ps.executeUpdate();
+            result = (rowsAffected == 1);
+                
                 
             }
             
@@ -59,6 +72,18 @@ public class RegistrationDAO {
             if (conn.isValid(0)) {
                 
                 // INSERT YOUR CODE HERE
+                // Prepare SQL statement to delete specific registration
+            String sql = "DELETE FROM registration WHERE studentid = ? AND termid = ? AND crn = ?";
+            ps = conn.prepareStatement(sql);
+            
+            // Set parameters
+            ps.setInt(1, studentid);
+            ps.setInt(2, termid);
+            ps.setInt(3, crn);
+            
+            // Execute delete and check if a row was deleted
+            int rowsAffected = ps.executeUpdate();
+            result = (rowsAffected == 1);
                 
             }
             
@@ -89,6 +114,17 @@ public class RegistrationDAO {
             if (conn.isValid(0)) {
                 
                 // INSERT YOUR CODE HERE
+                // Prepare SQL statement to delete all registrations for student in specific term
+            String sql = "DELETE FROM registration WHERE studentid = ? AND termid = ?";
+            ps = conn.prepareStatement(sql);
+            
+            // Set parameters
+            ps.setInt(1, studentid);
+            ps.setInt(2, termid);
+            
+            // Execute delete and check if any rows were deleted
+            int rowsAffected = ps.executeUpdate();
+            result = (rowsAffected > 0);
                 
             }
             
@@ -121,6 +157,19 @@ public class RegistrationDAO {
             if (conn.isValid(0)) {
                 
                 // INSERT YOUR CODE HERE
+                 // Prepare SQL statement to list registrations
+            String sql = "SELECT studentid, termid, crn FROM registration WHERE studentid = ? AND termid = ? ORDER BY crn";
+            ps = conn.prepareStatement(sql);
+            
+            // Set parameters
+            ps.setInt(1, studentid);
+            ps.setInt(2, termid);
+            
+            // Execute query
+            rs = ps.executeQuery();
+            
+            // Convert ResultSet to JSON
+            result = DAOUtility.getResultSetAsJson(rs);
                 
             }
             
